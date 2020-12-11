@@ -1,4 +1,4 @@
-module github.com/Joziaz/database-GO
+module github.com/Joziaz/Go-DB
 
 go 1.14
 
