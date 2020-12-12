@@ -32,7 +32,7 @@ func main() {
 		case "2":
 			ID, err := inputID()
 			if err != nil {
-				log.Printf("This caracther is invalid, error: %s \n", err)
+				log.Println(err)
 				continue
 			}
 
@@ -54,6 +54,34 @@ func main() {
 				log.Printf("Error when create: %s", err)
 			}
 
+		case "4":
+			ID, err := inputID()
+			if err != nil {
+				log.Println(err)
+				continue
+			}
+
+			art := models.Article{}
+			fillArticle(&art)
+
+			err = model.Update(ID, art)
+			if err != nil {
+				log.Printf("Error when update the article: %s", err)
+				continue
+			}
+
+		case "5":
+			ID, err := inputID()
+			if err != nil {
+				log.Println(err)
+				continue
+			}
+
+			err = model.Delete(ID)
+			if err != nil {
+				log.Printf("Error when delete the article: %s", err)
+				continue
+			}
 		case "0":
 			os.Exit(2)
 		default:
@@ -84,6 +112,7 @@ func inputID() (int, error) {
 	scanner.Scan()
 	ID, err := strconv.Atoi(scanner.Text())
 	if err != nil {
+		err = fmt.Errorf("This caracther is invalid, error: %s ", err)
 		return 0, err
 	}
 

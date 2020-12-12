@@ -10,16 +10,15 @@ import (
 	"github.com/Joziaz/Go-DB/db"
 )
 
+// Article definition
 type Article struct {
 	ID          int
 	Title       string
 	Description string
 }
 
-func NewArticle() Article {
-	return Article{}
-}
-
+// ArticleModel handle all data of the articles
+// in database
 type ArticleModel struct {
 	db *sql.DB
 }
@@ -104,7 +103,7 @@ func (model *ArticleModel) Create(article Article) error {
 
 // Update recieve a the id an delete de article from
 // the database
-func (model *ArticleModel) Update(article Article) error {
+func (model *ArticleModel) Update(ID int, article Article) error {
 
 	sql := `
 		Update articles
@@ -114,7 +113,7 @@ func (model *ArticleModel) Update(article Article) error {
 	ctx, cancelfunc := context.WithTimeout(context.Background(), time.Second*2)
 	defer cancelfunc()
 
-	result, err := model.db.ExecContext(ctx, sql, article.Title, article.Description, article.ID)
+	result, err := model.db.ExecContext(ctx, sql, article.Title, article.Description, ID)
 
 	if err != nil {
 		return err
@@ -126,7 +125,8 @@ func (model *ArticleModel) Update(article Article) error {
 	}
 
 	if rows != 1 {
-		log.Fatalf("Expected singel row affected, got %d rows affected", rows)
+		err := fmt.Errorf("Expected singel row affected, got %d rows affected", rows)
+		return err
 	}
 	return nil
 }
@@ -154,7 +154,8 @@ func (model *ArticleModel) Delete(id int) error {
 	}
 
 	if rows != 1 {
-		log.Fatalf("Expected singel row affected, got %d rows affected", rows)
+		err := fmt.Errorf("Expected singel row affected, got %d rows affected", rows)
+		return err
 	}
 
 	return nil
