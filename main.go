@@ -7,7 +7,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/Joziaz/database-GO/models"
+	"github.com/Joziaz/Go-DB/models"
 )
 
 func main() {

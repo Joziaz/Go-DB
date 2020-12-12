@@ -7,7 +7,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/Joziaz/database-GO/db"
+	"github.com/Joziaz/Go-DB/db"
 )
 
 type Article struct {
